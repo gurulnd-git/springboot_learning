@@ -1,23 +1,11 @@
 package com.example.test;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-
-import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Test {
-
 
     public static void main(String[] args) {
         Employee employee = new Employee();
@@ -41,6 +29,19 @@ public class Test {
         System.out.println("3");
         collect1.forEach((o, o2) -> System.out.println(o2.getName()));
 
+
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6,2);
+        int result = numbers
+                .stream()
+                .reduce(1, (subtotal, element) -> Integer.sum(subtotal,element));
+        System.out.println("result : "+ result);
+        result = numbers
+                .stream()
+                .reduce(1, (subtotal, element) -> subtotal+element);
+
+        System.out.println("result 1 : "+ result);
+        result = numbers.stream().reduce(0, Integer::sum);
+        System.out.println("result 2 : "+ result);
     }
 
 
