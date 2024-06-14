@@ -22,7 +22,15 @@ public class TestApplication {
 		System.out.println(emp.getName1());
 		System.out.println(student.toString());
 
-
+//		@Component
+//		@ConfigurationProperties(prefix = "example")
+//		public class TypeSafeConfiguration {
+//
+//			private String propertyName;
+//		@ConfigurationProperties(prefix = ClientProperties.PREFIX)
+//		public class ClientProperties {
+//
+//			public static final String PREFIX = "client";
 
 	}
 

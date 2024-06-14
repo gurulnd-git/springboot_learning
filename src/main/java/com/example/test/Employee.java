@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 class Employee {
     @Value("${datasource.username}")
@@ -64,10 +66,30 @@ class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "name1='" + name1 + '\'' +
+                "name='" + name + '\'' +
                 ", empId='" + empId + '\'' +
                 ", location='" + location + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Employee emp = (Employee) obj;
+        return empId == emp.empId;
+    }
+    @Override
+    public int hashCode() {
+        //overrides hashcode whenever equals is overriden else it violates the object contract
+        return Objects.hash(empId);
     }
 
 
