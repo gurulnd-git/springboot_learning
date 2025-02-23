@@ -48,6 +48,141 @@ public class Test {
         System.out.println(longestPalindromicSubstringRecursion("zzabcbai"));
       //  longestPanlindromeNumber
       //  removeDuplicatesEmpList();
+        //findDupicatesinalist()
+        //FindVowels()
+        //compareTwoArrays()
+        //subsetCheck()
+
+    }
+
+    public static void subSetCheck() {
+        int[] arr1 = {11, 1, 13, 21, 3, 7};
+        int[] arr2 = {11, 3, 7, 1};
+
+        boolean isSubset = Arrays.stream(arr2)
+                .allMatch(num -> Arrays.stream(arr1)
+                        .anyMatch(n -> n == num));
+        if (isSubset) {
+
+            System.out.println("arr2 is a subset of arr1");
+        } else {
+            System.out.println("arr2 is not a subset of arr1");
+        }
+
+        // or
+
+        if (isSubset(arr1, arr2)) {
+            System.out.println("arr2 is a subset of arr1");
+        } else {
+            System.out.println("arr2 is not a subset of arr1");
+        }
+    }
+
+    private static boolean isSubset(int[] arr1, int[] arr2) {
+        Set<Integer> set = new HashSet<>();
+        for (int num : arr1) {
+            set.add(num);
+        }
+        for (int num : arr2) {
+            if (!set.contains(num)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
+    public static void findSubsetofArray() {
+        int[] arr = {1, 2, 3};
+        List<List<Integer>> subsets = findSubsets(arr);
+        System.out.println(subsets);
+    }
+
+    public static List<List<Integer>> findSubsets(int[] nums) {
+        return IntStream.range(0, 1 << nums.length)
+                .mapToObj(i -> IntStream.range(0, nums.length)
+                        .filter(j -> (i & (1 << j)) != 0)
+                        .mapToObj(j -> nums[j])
+                        .collect(Collectors.toList()))
+                .collect(Collectors.toList());
+
+        //or
+
+//        List<List<Integer>> subsets = new ArrayList<>();
+//        backtrack(subsets, new ArrayList<>(), nums, 0);
+//        return subsets;
+    }
+
+    private static void backtrack(List<List<Integer>> subsets, List<Integer> tempList, int[] nums, int start) {
+        subsets.add(new ArrayList<>(tempList));
+        for (int i = start; i < nums.length; i++) {
+            tempList.add(nums[i]);
+            backtrack(subsets, tempList, nums, i + 1);
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+
+
+    public static void compareTwoArrays() {
+        int[] array1 = {1, 2, 3};
+        int[] array2 = {1, 2, 3};
+
+        boolean areEqual = Arrays.equals(array1, array2);
+        System.out.println("Arrays are equal: " + areEqual);
+
+        int result = Arrays.compare(array1, array2);
+        System.out.println("Comparison result: " + result);
+
+        Integer[][] array3 = {{1, 2, 3}, {4, 5, 6}};
+        Integer[][] array4 = {{1, 2, 3}, {4, 5, 6}};
+
+         areEqual = Arrays.deepEquals(array3, array4);
+        System.out.println("Arrays are equal: " + areEqual);
+
+    }
+    public static void FindVowels() {
+        String str = "Hello World";
+        List<Character> vowels = str.chars()
+                .mapToObj(c -> (char) c)
+                .filter(c -> "AEIOUaeiou".indexOf(c) != -1)
+                .collect(Collectors.toList());
+        System.out.println(vowels); // Output: [e, o, o]
+
+        //counting
+
+        long count = str.chars()
+                .mapToObj(c -> (char) c)
+                .filter(c -> "AEIOUaeiou".indexOf(c) != -1)
+                .count();
+        System.out.println("Number of vowels: " + count);
+    }
+
+    public static void findDuplicatesInaList() {
+
+        // Arrays.stream(array)
+
+
+        List<Integer> list = Arrays.asList(1, 2, 3, 3, 4, 4, 5);
+        Set<Integer> set = new HashSet<>();
+        List<Integer> duplicates = list.stream()
+                .filter(n -> !set.add(n))
+                .collect(Collectors.toList());
+        System.out.println(duplicates);
+
+        //frequency
+        List<Integer> duplicates1 = list.stream()
+                .filter(i -> Collections.frequency(list, i) > 1)
+                .distinct()
+                .collect(Collectors.toList());
+
+        //groupingby
+        List<Integer> duplicates2 = list.stream()
+                .collect(Collectors.groupingBy(e -> e, Collectors.counting()))
+                .entrySet().stream()
+                .filter(e -> e.getValue() > 1)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 
     public static String longestPalindromicSubstringRecursion(String str) {
